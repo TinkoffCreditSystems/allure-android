@@ -1,8 +1,8 @@
 package ru.tinkoff.allure.android
 
 import android.os.Environment
-import android.support.test.InstrumentationRegistry.getInstrumentation
-import android.support.test.uiautomator.UiDevice
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
+import androidx.test.uiautomator.UiDevice
 import java.util.concurrent.TimeUnit
 
 /**

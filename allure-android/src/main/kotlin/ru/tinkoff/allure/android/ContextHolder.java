@@ -1,7 +1,7 @@
 package ru.tinkoff.allure.android;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import androidx.test.InstrumentationRegistry;
 
 import java.lang.ref.WeakReference;
 

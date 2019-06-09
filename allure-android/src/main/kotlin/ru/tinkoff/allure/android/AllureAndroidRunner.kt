@@ -1,8 +1,8 @@
 package ru.tinkoff.allure.android
 
 import android.os.Bundle
-import android.support.annotation.Keep
-import android.support.test.runner.AndroidJUnitRunner
+import androidx.annotation.Keep
+import androidx.test.runner.AndroidJUnitRunner
 
 /**
  * @author Badya on 30.03.2017.

@@ -57,18 +57,18 @@ dependencies {
     implementation project(':allure-model')
     implementation project(':allure-common')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-    implementation "com.android.support:support-annotations:${supportVersion}"
-    implementation "com.android.support.test:runner:${supportTestVersion}"
-    implementation "com.android.support.test:rules:${supportTestVersion}"
-    implementation "com.android.support:multidex:${multidexVersion}"
-    implementation "com.android.support.test.uiautomator:uiautomator-v18:${uiAutomatorVersion}"
+    implementation "androidx.annotation:annotation:${androidXVersion}"
+    implementation "androidx.test:runner:${androidXTestVersion}"
+    implementation "androidx.test:rules:${androidXTestVersion}"
+    implementation "androidx.multidex:multidex:${multidexVersion}"
+    implementation "androidx.test.uiautomator:uiautomator:${uiAutomatorVersion}"
     implementation "junit:junit:${jUnitVersion}"
 
     androidTestImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:${espressoVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${espressoVersion}"
 
-    espressoImplementation "com.android.support:appcompat-v7:${supportVersion}"
-    espressoImplementation "com.android.support.constraint:constraint-layout:1.0.2"
+    espressoImplementation "androidx.appcompat:appcompat:${androidXVersion}"
+    espressoImplementation "androidx.constraintlayout:constraintlayout:1.1.3"
     espressoImplementation "io.reactivex:rxjava:1.3.4"
 }
 

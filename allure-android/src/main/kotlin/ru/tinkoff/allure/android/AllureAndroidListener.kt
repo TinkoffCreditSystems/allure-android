@@ -1,8 +1,8 @@
 package ru.tinkoff.allure.android
 
 import android.os.Build
-import android.support.test.internal.runner.listener.InstrumentationRunListener
-import android.support.test.uiautomator.UiDevice
+import androidx.test.internal.runner.listener.InstrumentationRunListener
+import androidx.test.uiautomator.UiDevice
 import org.junit.runner.Description
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
