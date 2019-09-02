@@ -33,6 +33,10 @@ const val PNG_EXTENSION = ".png"
 
 const val IMAGE_PNG = "image/png"
 
+const val XML_EXTENSION = ".xml"
+
+const val TEXT_XML = "text/xml"
+
 fun generateTestResultName(uuid: String) = uuid + TEST_RESULT_FILE_SUFFIX
 
 fun generateTestResultName() = generateTestResultName(UUID.randomUUID().toString())

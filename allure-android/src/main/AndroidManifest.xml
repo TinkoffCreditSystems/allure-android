@@ -2,7 +2,7 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="ru.tinkoff.allure">
 
-    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
+    <uses-sdk tools:overrideLibrary="androidx.test.uiautomator.v18"/>
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

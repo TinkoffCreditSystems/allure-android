@@ -4,8 +4,17 @@ import org.junit.runner.Description
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
-import ru.tinkoff.allure.model.*
-import ru.tinkoff.allure.utils.*
+import ru.tinkoff.allure.model.Label
+import ru.tinkoff.allure.model.Status
+import ru.tinkoff.allure.model.StatusDetails
+import ru.tinkoff.allure.model.TestResult
+import ru.tinkoff.allure.model.TestResultContainer
+import ru.tinkoff.allure.utils.getClassDisplayName
+import ru.tinkoff.allure.utils.getHistoryId
+import ru.tinkoff.allure.utils.getLabels
+import ru.tinkoff.allure.utils.getLinks
+import ru.tinkoff.allure.utils.getMethodDisplayName
+import ru.tinkoff.allure.utils.getPackage
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -76,8 +85,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
                         Label("testClass", description.className),
                         Label("testMethod", description.methodName),
                         Label("suite", getClassDisplayName(description)))
-                // TODO: Labels
-                // result.getLabels().addAll(getLabels(description));
+                        + getLabels(description)
         )
         with(lifecycle) {
             scheduleTestCase(getContainer(description).uuid, testResult)

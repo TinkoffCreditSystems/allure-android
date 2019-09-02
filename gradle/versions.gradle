@@ -1,7 +1,7 @@
 ext {
 
     compileSdkVersion = 28
-    minSdkVersion = 15
+    minSdkVersion = 18
     buildToolsVersion = '28.0.2'
 
     isRelease = project.hasProperty('release')
