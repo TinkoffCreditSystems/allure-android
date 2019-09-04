@@ -2,10 +2,7 @@ package ru.tinkoff.allure.utils
 
 import org.junit.runner.Description
 import ru.tinkoff.allure.SeverityLevel
-import ru.tinkoff.allure.annotations.DisplayName
-import ru.tinkoff.allure.annotations.Issue
-import ru.tinkoff.allure.annotations.Owner
-import ru.tinkoff.allure.annotations.Severity
+import ru.tinkoff.allure.annotations.*
 import ru.tinkoff.allure.model.Label
 import ru.tinkoff.allure.model.Link
 import java.math.BigInteger
@@ -19,6 +16,9 @@ const val ISSUE_LINK_TYPE = "issue"
 const val SEVERITY_LABEL_NAME = "severity"
 const val TAG_LABEL_NAME = "tag"
 const val OWNER_LABEL_NAME = "owner"
+const val EPIC_LABEL_NAME = "epic"
+const val FEATURE_LABEL_NAME = "feature"
+const val STORY_LABEL_NAME = "story"
 
 fun getMethodDisplayName(description: Description): String {
     return description.getAnnotation(DisplayName::class.java)?.value ?: description.methodName
@@ -78,6 +78,42 @@ fun getLinkUrl(name: String?, type: String): String? {
     return pattern.replace("\\{}", name ?: "")
 }
 
+fun createLabels(epics: Epics): List<Label> {
+    return epics.value.map { createLabel(it) }
+}
+
+fun createLabel(epic: Epic): Label {
+    return createEpicLabel(epic.value)
+}
+
+fun createEpicLabel(value: String): Label {
+    return createLabel(name = EPIC_LABEL_NAME, value = value)
+}
+
+fun createLabels(features: Features): List<Label> {
+    return features.value.map { createLabel(it) }
+}
+
+fun createLabel(feature: Feature): Label {
+    return createFeatureLabel(feature.value)
+}
+
+fun createFeatureLabel(value: String): Label {
+    return createLabel(name = FEATURE_LABEL_NAME, value = value)
+}
+
+fun createLabels(features: Stories): List<Label> {
+    return features.value.map { createLabel(it) }
+}
+
+fun createLabel(feature: Story): Label {
+    return createStoryLabel(feature.value)
+}
+
+fun createStoryLabel(value: String): Label {
+    return createLabel(name = STORY_LABEL_NAME, value = value)
+}
+
 fun getLinks(description: Description): List<Link> {
     return getAnnotationsOnClass(description, ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
             getAnnotationsOnMethod(description, ru.tinkoff.allure.annotations.Link::class.java).map { createLink(it) } +
@@ -88,8 +124,27 @@ fun getLinks(description: Description): List<Link> {
 fun getLabels(description: Description): List<Label> {
     return getAnnotationsOnClass(description, Owner::class.java).map { createLabel(it) } +
             getAnnotationsOnMethod(description, Owner::class.java).map { createLabel(it) } +
+
             getAnnotationsOnClass(description, Severity::class.java).map { createLabel(it) } +
-            getAnnotationsOnMethod(description, Severity::class.java).map { createLabel(it) }
+            getAnnotationsOnMethod(description, Severity::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnClass(description, Epics::class.java).flatMap { createLabels(it) } +
+            getAnnotationsOnMethod(description, Epics::class.java).flatMap { createLabels(it) } +
+
+            getAnnotationsOnClass(description, Epic::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Epic::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnClass(description, Features::class.java).flatMap { createLabels(it) } +
+            getAnnotationsOnMethod(description, Features::class.java).flatMap { createLabels(it) } +
+
+            getAnnotationsOnClass(description, Feature::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Feature::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnClass(description, Stories::class.java).flatMap { createLabels(it) } +
+            getAnnotationsOnMethod(description, Stories::class.java).flatMap { createLabels(it) } +
+
+            getAnnotationsOnClass(description, Story::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Story::class.java).map { createLabel(it) }
 }
 
 fun <T : Annotation> getAnnotationsOnMethod(description: org.junit.runner.Description, clazz: Class<T>): List<T> {
