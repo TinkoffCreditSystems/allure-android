@@ -12,14 +12,14 @@ buildscript {
 }
 
 dependencies {
-    compile project(":allure-model")
+    implementation project(":allure-model")
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
-    compile "com.google.code.gson:gson:${gsonVersion}"
-    compile "junit:junit:${jUnitVersion}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "junit:junit:${jUnitVersion}"
 
-    testCompile "org.hamcrest:hamcrest-all:${hamcrestVersion}"
-    testCompile "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
+    testImplementation "org.hamcrest:hamcrest-all:${hamcrestVersion}"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"
 }
 
 sourceSets {

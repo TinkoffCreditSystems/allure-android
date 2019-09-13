@@ -55,7 +55,7 @@ android {
 
 dependencies {
     implementation project(':allure-model')
-    implementation project(':allure-common')
+    implementation project(':allure-android-commons')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation "androidx.annotation:annotation:${androidXVersion}"
     implementation "androidx.test:runner:${androidXTestVersion}"

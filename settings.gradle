@@ -1,5 +1,5 @@
 rootProject.name = "allure_android"
 
 include "allure-model"
-include "allure-common"
+include "allure-android-commons"
 include "allure-android"
