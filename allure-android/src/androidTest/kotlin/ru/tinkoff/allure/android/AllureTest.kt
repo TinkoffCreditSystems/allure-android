@@ -10,6 +10,7 @@ import ru.tinkoff.allure.annotations.DisplayName
 import ru.tinkoff.allure.annotations.Issue
 import ru.tinkoff.allure.annotations.Owner
 import ru.tinkoff.allure.annotations.Severity
+import ru.tinkoff.allure.annotations.TmsLink
 import ru.tinkoff.allure.step
 import kotlin.test.assertTrue
 import kotlin.test.fail
@@ -41,6 +42,7 @@ class AllureTest {
     @Test
     @Owner("owner2")
     @DisplayName("annotations")
+    @TmsLink("tms-1")
     @Severity(SeverityLevel.BLOCKER)
     fun shouldAddAnnotations() {
         assertTrue(true)
