@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         versionName rootProject.projectVersion
 
-        testInstrumentationRunner "ru.tinkoff.allure.android.AllureAndroidRunner"
+        testInstrumentationRunner "io.qameta.allure.android.android.AllureAndroidRunner"
     }
 
     lintOptions {
@@ -54,7 +54,7 @@ android {
 }
 
 dependencies {
-    implementation project(':allure-model')
+    implementation project(':allure-android-model')
     implementation project(':allure-android-commons')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation "androidx.annotation:annotation:${androidXVersion}"

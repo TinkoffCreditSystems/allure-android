@@ -3,7 +3,7 @@
 
     <application
         android:theme="@style/Theme.AppCompat.DayNight">
-        <activity android:name="ru.tinkoff.allure.CrashTestActivity">
+        <activity android:name="io.qameta.allure.android.CrashTestActivity">
         </activity>
     </application>
 </manifest>

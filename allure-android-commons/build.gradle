@@ -12,7 +12,7 @@ buildscript {
 }
 
 dependencies {
-    implementation project(":allure-model")
+    implementation project(':allure-android-model')
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation "com.google.code.gson:gson:${gsonVersion}"

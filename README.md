@@ -39,7 +39,7 @@ dependencies {
 
 android {
     defaultConfig {
-        testInstrumentationRunner "ru.tinkoff.allure.android.AllureAndroidRunner"
+        testInstrumentationRunner "io.qameta.allure.android.android.AllureAndroidRunner"
     }
 }
 
