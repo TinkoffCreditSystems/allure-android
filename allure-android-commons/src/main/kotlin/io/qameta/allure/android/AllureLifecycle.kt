@@ -4,6 +4,7 @@ import io.qameta.allure.android.io.AllureResultsReader
 import io.qameta.allure.android.io.AllureResultsWriter
 import io.qameta.allure.android.io.FileSystemResultsReader
 import io.qameta.allure.android.io.FileSystemResultsWriter
+import io.qameta.allure.android.io.generateAttachmentFileName
 import io.qameta.allure.android.listener.ContainerLifecycleListener
 import io.qameta.allure.android.listener.ContainerLifecycleNotifier
 import io.qameta.allure.android.listener.StepLifecycleListener
@@ -169,7 +170,7 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
     }
 
     open fun prepareAttachment(name: String?, type: String?, fileExtension: String?): File {
-        val fileName = io.qameta.allure.android.io.generateAttachmentFileName(UUID.randomUUID().toString(), fileExtension)
+        val fileName = generateAttachmentFileName(UUID.randomUUID().toString(), fileExtension)
         val uuid = AllureStorage.getCurrentStep()
         val attachment = Attachment(
                 name = if (name.isNullOrBlank()) null else name,
