@@ -1,1 +1,1 @@
-io.qameta.allure.android.listener.LogCatListener
+io.qameta.allure.espresso.listener.LogCatListener

@@ -1,12 +1,12 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.espresso
 
 import android.os.Build
 import androidx.test.internal.runner.listener.InstrumentationRunListener
 import androidx.test.uiautomator.UiDevice
+import io.qameta.allure.android.AllureRunListener
 import org.junit.runner.Description
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
-import io.qameta.allure.android.AllureRunListener
 import io.qameta.allure.android.model.Status
 import io.qameta.allure.android.model.StatusDetails
 

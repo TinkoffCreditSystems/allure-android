@@ -1,10 +1,10 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.espresso
 
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.uiautomator.UiDevice
 import io.qameta.allure.android.io.IMAGE_PNG
 import io.qameta.allure.android.io.PNG_EXTENSION
-import io.qameta.allure.android.utils.createAttachmentFile
+import io.qameta.allure.espresso.utils.createAttachmentFile
 import java.util.concurrent.TimeUnit
 
 /**

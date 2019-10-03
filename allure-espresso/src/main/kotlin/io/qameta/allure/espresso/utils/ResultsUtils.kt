@@ -1,8 +1,9 @@
-package io.qameta.allure.android.utils
+package io.qameta.allure.espresso.utils
 
 import android.util.Base64
 import io.qameta.allure.android.annotations.Description
 import io.qameta.allure.android.model.ExecutableItem
+import io.qameta.allure.android.utils.md5
 import java.lang.reflect.Method
 
 /**

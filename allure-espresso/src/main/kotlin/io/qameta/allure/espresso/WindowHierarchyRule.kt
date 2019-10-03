@@ -1,4 +1,4 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.espresso
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
@@ -7,7 +7,7 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 import io.qameta.allure.android.io.TEXT_XML
 import io.qameta.allure.android.io.XML_EXTENSION
-import io.qameta.allure.android.utils.createAttachmentFile
+import io.qameta.allure.espresso.utils.createAttachmentFile
 import java.util.concurrent.TimeUnit
 
 class WindowHierarchyRule : TestRule {

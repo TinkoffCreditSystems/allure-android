@@ -1,4 +1,4 @@
-package io.qameta.allure.android.android;
+package io.qameta.allure.espresso;
 
 import android.os.Bundle;
 import androidx.multidex.MultiDex;

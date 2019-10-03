@@ -1,4 +1,4 @@
-package io.qameta.allure.android.android;
+package io.qameta.allure.espresso;
 
 import android.content.Context;
 import androidx.test.InstrumentationRegistry;

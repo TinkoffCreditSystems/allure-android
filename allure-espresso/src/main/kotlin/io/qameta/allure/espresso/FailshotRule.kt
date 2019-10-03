@@ -1,4 +1,4 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.espresso
 
 import org.junit.rules.TestRule
 import org.junit.runner.Description

@@ -16,14 +16,14 @@ class CrashTest {
     @get:Rule
     val activityRule = ActivityTestRule<CrashTestActivity>(CrashTestActivity::class.java, true, false)
 
-    // adb shell am instrument -w -r   -e debug false -e class ru.tinkoff.allure.CrashTest#crash ru.tinkoff.allure.test/io.qameta.allure.android.android.AllureAndroidRunner
+    // adb shell am instrument -w -r   -e debug false -e class io.qameta.allure.android.CrashTest#crash io.qameta.allure.android.test/io.qameta.allure.espresso.AllureAndroidRunner
     @Test
     fun crash() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext().applicationContext, CrashTestActivity::class.java))
         onView(withId(R.id.crash_button)).perform(click())
     }
 
-    // adb shell am instrument -w -r   -e debug false -e class ru.tinkoff.allure.CrashTest#rxCrash ru.tinkoff.allure.test/io.qameta.allure.android.android.AllureAndroidRunner
+    // adb shell am instrument -w -r   -e debug false -e class io.qameta.allure.android.CrashTest#rxCrash io.qameta.allure.android.test/io.qameta.allure.espresso.AllureAndroidRunner
     @Test
     fun rxCrash() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext().applicationContext, CrashTestActivity::class.java))

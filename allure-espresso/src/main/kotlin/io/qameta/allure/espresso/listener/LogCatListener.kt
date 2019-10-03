@@ -1,4 +1,4 @@
-package io.qameta.allure.android.listener
+package io.qameta.allure.espresso.listener
 
 import android.util.Log
 import io.qameta.allure.android.listener.ContainerLifecycleListener

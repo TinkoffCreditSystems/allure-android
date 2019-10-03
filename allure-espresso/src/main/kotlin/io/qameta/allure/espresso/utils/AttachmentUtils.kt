@@ -1,4 +1,4 @@
-package io.qameta.allure.android.utils
+package io.qameta.allure.espresso.utils
 
 import android.os.Environment
 import java.io.File

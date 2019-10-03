@@ -1,4 +1,4 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.espresso
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.internal.util.AndroidRunnerParams

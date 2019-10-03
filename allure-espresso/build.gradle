@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         versionName rootProject.projectVersion
 
-        testInstrumentationRunner "io.qameta.allure.android.android.AllureAndroidRunner"
+        testInstrumentationRunner "io.qameta.allure.espresso.AllureAndroidRunner"
     }
 
     lintOptions {
