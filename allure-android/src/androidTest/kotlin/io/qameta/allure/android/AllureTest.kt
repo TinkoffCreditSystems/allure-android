@@ -1,17 +1,19 @@
-package io.qameta.allure.android.android
+package io.qameta.allure.android
 
 import androidx.test.runner.AndroidJUnit4
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.runner.RunWith
-import io.qameta.allure.android.SeverityLevel
+import io.qameta.allure.android.android.FailshotRule
+import io.qameta.allure.android.android.LogcatClearRule
+import io.qameta.allure.android.android.LogcatDumpRule
+import io.qameta.allure.android.android.WindowHierarchyRule
 import io.qameta.allure.android.annotations.DisplayName
 import io.qameta.allure.android.annotations.Issue
 import io.qameta.allure.android.annotations.Owner
 import io.qameta.allure.android.annotations.Severity
 import io.qameta.allure.android.annotations.TmsLink
-import io.qameta.allure.android.step
 import kotlin.test.assertTrue
 import kotlin.test.fail
 

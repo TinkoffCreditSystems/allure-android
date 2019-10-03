@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.tinkoff.allure.CrashTestActivity">
+    tools:context="io.qameta.allure.android.CrashTestActivity">
 
     <Button
         android:id="@+id/crash_button"

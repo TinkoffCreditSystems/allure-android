@@ -1,4 +1,4 @@
-package ru.tinkoff.allure
+package io.qameta.allure.android
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
