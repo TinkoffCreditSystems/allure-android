@@ -1,16 +1,5 @@
 apply plugin: 'kotlin'
 
-buildscript {
-    apply from: '../gradle/versions.gradle'
-    apply from: '../gradle/common.gradle'
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}"
-    }
-}
-
 dependencies {
     implementation project(':allure-android-model')
 

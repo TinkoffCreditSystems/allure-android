@@ -1,8 +1,0 @@
-allprojects {
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
-    }
-    configurations.all {
-        resolutionStrategy.cacheChangingModulesFor 0, "seconds"
-    }
-}

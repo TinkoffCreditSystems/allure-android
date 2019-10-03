@@ -1,13 +1,61 @@
-apply from: 'gradle/common.gradle'
-apply from: 'gradle/versions.gradle'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.51'
+        classpath 'com.android.tools.build:gradle:3.2.0'
+    }
+}
+ext {
+    gradleScriptDir = "${rootProject.projectDir}/gradle"
+    compileSdkVersion = 28
+    minSdkVersion = 18
+    buildToolsVersion = '28.0.2'
+
+    gsonVersion = '2.8.0'
+
+    hamcrestVersion = '1.3'
+    androidXVersion = '1.0.0'
+    androidXTestVersion = '1.2.0'
+    multidexVersion = '2.0.1'
+    jUnitVersion = '4.12'
+    uiAutomatorVersion = '2.2.0'
+    espressoVersion = '3.1.0'
+
+    androidPlugin = '3.2.0'
+    versionsPlugin = '0.11.3'
+    kotlinVersion = '1.2.51'
+    dexCountVersion = '0.8.1'
+}
+
+apply from: 'gradle/bintray.gradle'
 
 allprojects {
-    apply plugin: "idea"
+    group 'io.qameta.allure'
+    version = version
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, "seconds"
+    }
+
     repositories {
         google()
         jcenter()
     }
+}
 
-    group 'io.qameta.allure.android'
-    version = rootProject.projectVersion
+subprojects { project ->
+
+    apply plugin: 'maven'
+
+    apply from: "${gradleScriptDir}/common.gradle"
+
 }
