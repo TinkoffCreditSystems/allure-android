@@ -1,5 +1,5 @@
-rootProject.name = "allure_android"
+rootProject.name = "allure-android"
 
 include "allure-android-model"
 include "allure-android-commons"
-include "allure-android"
+include "allure-espresso"
