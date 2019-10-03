@@ -8,6 +8,6 @@ allprojects {
         jcenter()
     }
 
-    group 'ru.tinkoff.allure'
+    group 'io.qameta.allure.android'
     version = rootProject.projectVersion
 }
