@@ -22,6 +22,38 @@
 ### Configure
 #### Gradle
 
+New version with support AndroidX (BETA), available [here](https://bintray.com/qameta/maven/allure-android/2.0.0-beta1)
+
+Add to: _app/build.gradle_
+
+```gradle
+apply plugin: 'kotlin-android'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://dl.bintray.com/qameta/maven' }
+}
+
+dependencies {
+    androidTestCompile "io.qameta.allure:allure-android-commons:2.0.0-beta1"
+    androidTestCompile "io.qameta.allure:allure-android-model:2.0.0-beta1"
+    androidTestCompile "io.qameta.allure:allure-espresso:2.0.0-beta1"
+
+    androidTestCompile "org.jetbrains.kotlin:kotlin-stdlib:1.2.51"
+    androidTestCompile "junit:junit:4.12"
+    androidTestCompile "androidx.test.uiautomator:uiautomator:2.2.0"
+}
+
+android {
+    defaultConfig {
+        testInstrumentationRunner "io.qameta.allure.espresso.AllureAndroidRunner"
+    }
+}
+
+```
+ut be aware that new version isn't backward compatible with older versions. 
+
+Old version, without AndroidX, now not supported
 Add to: _app/build.gradle_
 
 ```gradle
@@ -120,7 +152,7 @@ class MyTest {
 }
 ```
 
-### Logcat rule's
+### Logcat rule's (BETA)
 You can use `LogcatDumpRule`, `LogcatClearRule` to clear and capture a device logs in case of `Throwable` during test
 ```kotlin
 class MyTest {
@@ -132,7 +164,7 @@ class MyTest {
 }
 ```
 
-### Window hierarchy rule
+### Window hierarchy rule (BETA)
 You can use `WindowHierarchyRule` to capture a window hierarchy via UIautomator in case of `Throwable` during test
 ```kotlin
 class MyTest {
@@ -145,7 +177,7 @@ class MyTest {
 ```
 
 ### Allure annotations
-You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`, `@SeverityLevel` and others.
+You can use some allure annotation, like `@DisplayName`, `@Link`, `@Issue`, `@Owner`(BETA), `@SeverityLevel`(BETA) and others.
 
 ## Contributing to allure-android
 Thanks to all people who contributed. Especially [Tinkoff](https://www.tinkoff.ru/) and [@Badya](https://github.com/badya) who started and maintaining allure-android.
