@@ -16,7 +16,7 @@ ext {
     gradleScriptDir = "${rootProject.projectDir}/gradle"
 
     compileSdkVersion = 28
-    minSdkVersion = 18
+    minSdkVersion = 15
     buildToolsVersion = '28.0.2'
 
     gsonVersion = '2.8.0'
