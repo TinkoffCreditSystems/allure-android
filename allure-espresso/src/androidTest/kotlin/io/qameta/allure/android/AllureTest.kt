@@ -14,6 +14,8 @@ import io.qameta.allure.espresso.FailshotRule
 import io.qameta.allure.espresso.LogcatClearRule
 import io.qameta.allure.espresso.LogcatDumpRule
 import io.qameta.allure.espresso.WindowHierarchyRule
+import org.junit.Assume
+import org.junit.Ignore
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
@@ -48,5 +50,22 @@ class AllureTest {
     @Severity(SeverityLevel.BLOCKER)
     fun shouldAddAnnotations() {
         assertTrue(true)
+    }
+
+    @Ignore("Some reason")
+    @Test
+    fun shouldIgnoredWithSomeReason() {
+        assertTrue(true)
+    }
+
+    @Test
+    @Ignore
+    fun shouldIgnored() {
+        assertTrue(true)
+    }
+
+    @Test
+    fun shouldAssumed() {
+        Assume.assumeTrue(false)
     }
 }

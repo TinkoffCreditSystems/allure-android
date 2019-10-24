@@ -2,6 +2,7 @@ apply plugin: 'kotlin'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
+    implementation "junit:junit:${jUnitVersion}"
     implementation "com.google.code.gson:gson:${gsonVersion}"
 
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}"

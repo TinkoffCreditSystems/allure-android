@@ -1,9 +1,5 @@
 package io.qameta.allure.android
 
-import org.junit.runner.Description
-import org.junit.runner.Result
-import org.junit.runner.notification.Failure
-import org.junit.runner.notification.RunListener
 import io.qameta.allure.android.model.Label
 import io.qameta.allure.android.model.Status
 import io.qameta.allure.android.model.StatusDetails
@@ -15,8 +11,13 @@ import io.qameta.allure.android.utils.getLabels
 import io.qameta.allure.android.utils.getLinks
 import io.qameta.allure.android.utils.getMethodDisplayName
 import io.qameta.allure.android.utils.getPackage
+import org.junit.runner.Description
+import org.junit.runner.Result
+import org.junit.runner.notification.Failure
+import org.junit.runner.notification.RunListener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
+import org.junit.Ignore
 
 /**
  * @author b.mukvich on 01.06.2017.
@@ -74,19 +75,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
     @Throws(Exception::class)
     override fun testStarted(description: Description) {
         // val uuid = AllureStorage.getTest()
-        val testResult = TestResult(
-                uuid = "${description.className}#${description.methodName}",
-                historyId = getHistoryId(description),
-                name = getMethodDisplayName(description),
-                fullName = "${description.className}.${description.methodName}",
-                links = getLinks(description),
-                labels = listOf(
-                        Label("package", getPackage(description.testClass)),
-                        Label("testClass", description.className),
-                        Label("testMethod", description.methodName),
-                        Label("suite", getClassDisplayName(description)))
-                        + getLabels(description)
-        )
+        val testResult = createTestResult(description)
         with(lifecycle) {
             scheduleTestCase(getContainer(description).uuid, testResult)
             startTestCase(testResult.uuid)
@@ -142,8 +131,12 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      * @param failure describes the test that failed and the
      * *                [org.junit.AssumptionViolatedException] that was thrown
      */
-    override fun testAssumptionFailure(failure: Failure?) {
-        //not implemented
+    @Throws(Exception::class)
+    override fun testAssumptionFailure(failure: Failure) {
+        lifecycle.updateTestCase {
+            status = Status.fromThrowable(failure.exception)
+            statusDetails = StatusDetails.fromThrowable(failure.exception)
+        }
     }
 
     /**
@@ -153,8 +146,18 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      * @param description describes the test that will not be run
      */
     @Throws(Exception::class)
-    override fun testIgnored(description: Description?) {
-        //not implemented
+    override fun testIgnored(description: Description) {
+        val testResult = createTestResult(description)
+        testResult.status = Status.SKIPPED
+        testResult.statusDetails = getIgnoredMessage(description)
+        testResult.start = System.currentTimeMillis()
+
+        with(lifecycle) {
+            scheduleTestCase(getContainer(description).uuid, testResult)
+            startTestCase(testResult.uuid)
+            stopTestCase(testResult.uuid)
+            writeTestCase(testResult.uuid)
+        }
     }
 
     protected open fun finalizeContainer(container: String?) {
@@ -177,6 +180,30 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
         containers.put(description.className, container)
         lifecycle.startTestContainer(mainContainer.get(), container)
         return container
+    }
+
+    private fun getIgnoredMessage(description: Description): StatusDetails {
+        val ignore = description.getAnnotation(Ignore::class.java)
+        val message = if ((ignore != null) && ignore.value.isNotEmpty())
+            ignore.value else "Test ignored (without reason)!"
+
+        return StatusDetails(message = message)
+    }
+
+    private fun createTestResult(description: Description): TestResult {
+        return TestResult(
+                uuid = "${description.className}#${description.methodName}",
+                historyId = getHistoryId(description),
+                name = getMethodDisplayName(description),
+                fullName = "${description.className}.${description.methodName}",
+                links = getLinks(description),
+                labels = listOf(
+                        Label("package", getPackage(description.testClass)),
+                        Label("testClass", description.className),
+                        Label("testMethod", description.methodName),
+                        Label("suite", getClassDisplayName(description)))
+                        + getLabels(description)
+        )
     }
 
 }

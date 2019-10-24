@@ -28,9 +28,9 @@ class AllureAndroidListener : InstrumentationRunListener() {
     override fun testFailure(failure: Failure) {
         if (failure.description.isTest) {
             val uuid = "${failure.description.className}#${failure.description.methodName}"
-            testFailed(uuid, failure)
+            testWithException(uuid, failure)
         } else {
-            suiteFailed(failure)
+            suiteWithException(failure)
         }
     }
 
@@ -43,7 +43,20 @@ class AllureAndroidListener : InstrumentationRunListener() {
         allureListenerDelegate.testRunFinished()
     }
 
-    private fun testFailed(uuid: String, failure: Failure) {
+    override fun testIgnored(description: Description) {
+        allureListenerDelegate.testIgnored(description)
+    }
+
+    override fun testAssumptionFailure(failure: Failure) {
+        if (failure.description.isTest) {
+            val uuid = "${failure.description.className}#${failure.description.methodName}"
+            testWithException(uuid, failure)
+        } else {
+            suiteWithException(failure)
+        }
+    }
+
+    private fun testWithException(uuid: String, failure: Failure) {
         with(lifecycle) {
             updateTestCase(uuid) {
                 status = Status.fromThrowable(failure.exception)
@@ -53,10 +66,10 @@ class AllureAndroidListener : InstrumentationRunListener() {
         }
     }
 
-    private fun suiteFailed(failure: Failure) {
+    private fun suiteWithException(failure: Failure) {
         failure.description.children.forEach {
             val uuid = "${it.className}#${it.methodName}"
-            testFailed(uuid, failure)
+            testWithException(uuid, failure)
         }
     }
 
