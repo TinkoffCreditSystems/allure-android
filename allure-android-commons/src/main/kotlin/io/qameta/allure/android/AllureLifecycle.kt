@@ -114,7 +114,6 @@ abstract class AllureLifecycle(private val reader: AllureResultsReader,
             steps.forEach { AllureStorage.remove(it.uuid, StepResult::class.java) }
             afterTestStop(this)
         }
-
     }
 
     open fun writeTestCase() = writeTestCase(AllureStorage.getTest())

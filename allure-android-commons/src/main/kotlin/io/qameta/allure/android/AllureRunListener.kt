@@ -11,13 +11,13 @@ import io.qameta.allure.android.utils.getLabels
 import io.qameta.allure.android.utils.getLinks
 import io.qameta.allure.android.utils.getMethodDisplayName
 import io.qameta.allure.android.utils.getPackage
+import org.junit.Ignore
 import org.junit.runner.Description
 import org.junit.runner.Result
 import org.junit.runner.notification.Failure
 import org.junit.runner.notification.RunListener
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
-import org.junit.Ignore
 
 /**
  * @author b.mukvich on 01.06.2017.
@@ -184,26 +184,23 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
 
     private fun getIgnoredMessage(description: Description): StatusDetails {
         val ignore = description.getAnnotation(Ignore::class.java)
-        val message = if ((ignore != null) && ignore.value.isNotEmpty())
+        val message = if (ignore?.value?.isNotEmpty() == true)
             ignore.value else "Test ignored (without reason)!"
 
         return StatusDetails(message = message)
     }
 
-    private fun createTestResult(description: Description): TestResult {
-        return TestResult(
-                uuid = "${description.className}#${description.methodName}",
-                historyId = getHistoryId(description),
-                name = getMethodDisplayName(description),
-                fullName = "${description.className}.${description.methodName}",
-                links = getLinks(description),
-                labels = listOf(
-                        Label("package", getPackage(description.testClass)),
-                        Label("testClass", description.className),
-                        Label("testMethod", description.methodName),
-                        Label("suite", getClassDisplayName(description)))
-                        + getLabels(description)
-        )
-    }
-
+    private fun createTestResult(description: Description): TestResult = TestResult(
+            uuid = "${description.className}#${description.methodName}",
+            historyId = getHistoryId(description),
+            name = getMethodDisplayName(description),
+            fullName = "${description.className}.${description.methodName}",
+            links = getLinks(description),
+            labels = listOf(
+                    Label("package", getPackage(description.testClass)),
+                    Label("testClass", description.className),
+                    Label("testMethod", description.methodName),
+                    Label("suite", getClassDisplayName(description)))
+                    + getLabels(description)
+    )
 }
