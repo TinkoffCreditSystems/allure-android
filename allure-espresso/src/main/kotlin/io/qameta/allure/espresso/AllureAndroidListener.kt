@@ -61,6 +61,7 @@ class AllureAndroidListener : InstrumentationRunListener() {
             updateTestCase(uuid) {
                 status = Status.fromThrowable(failure.exception)
                 statusDetails = StatusDetails.fromThrowable(failure.exception)
+                stop = System.currentTimeMillis()
             }
             writeTestCase(uuid)
         }
