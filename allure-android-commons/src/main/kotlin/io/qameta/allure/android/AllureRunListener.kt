@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap
  * @author b.mukvich on 01.06.2017.
  */
 open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureCommonLifecycle) : RunListener() {
-    private val mainContainer = object : InheritableThreadLocal<String>() {
+    private val testCases = object : InheritableThreadLocal<String>() {
         public override fun initialValue() = UUID.randomUUID().toString()
     }
 
@@ -42,7 +42,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
 
     fun testRunStarted() {
         lifecycle.startTestContainer(TestResultContainer(
-                uuid = mainContainer.get(),
+                uuid = testCases.get(),
                 name = "TESTS",
                 start = System.currentTimeMillis()))
     }
@@ -62,8 +62,8 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
         Collections.list(containers.keys()).forEach {
             finalizeContainer(containers.remove(it)?.uuid)
         }
-        finalizeContainer(mainContainer.get())
-        mainContainer.remove()
+        finalizeContainer(testCases.get())
+        testCases.remove()
     }
 
     /**
@@ -177,7 +177,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
         )
 
         containers.put(description.className, container)
-        lifecycle.startTestContainer(mainContainer.get(), container)
+        lifecycle.startTestContainer(testCases.get(), container)
         return container
     }
 
@@ -224,6 +224,6 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
     }
 
     private fun getUUIDTestResult(description: Description): String {
-        return "${description.className}#${description.methodName}"
+        return "${testCases.get()}-${description.className}#${description.methodName}"
     }
 }
