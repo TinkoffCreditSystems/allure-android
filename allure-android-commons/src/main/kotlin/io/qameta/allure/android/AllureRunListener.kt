@@ -118,9 +118,11 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      */
     @Throws(Exception::class)
     override fun testFailure(failure: Failure) {
-        lifecycle.updateTestCase {
-            status = Status.fromThrowable(failure.exception)
-            statusDetails = StatusDetails.fromThrowable(failure.exception)
+        if (failure.description.isTest) {
+            val uuid = getUUIDTestResult(failure.description)
+            testWithException(uuid, failure)
+        } else {
+            suiteWithException(failure)
         }
     }
 
@@ -133,10 +135,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      */
     @Throws(Exception::class)
     override fun testAssumptionFailure(failure: Failure) {
-        lifecycle.updateTestCase {
-            status = Status.fromThrowable(failure.exception)
-            statusDetails = StatusDetails.fromThrowable(failure.exception)
-        }
+        testFailure(failure)
     }
 
     /**
@@ -191,7 +190,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
     }
 
     private fun createTestResult(description: Description): TestResult = TestResult(
-            uuid = "${description.className}#${description.methodName}",
+            uuid = getUUIDTestResult(description),
             historyId = getHistoryId(description),
             name = getMethodDisplayName(description),
             fullName = "${description.className}.${description.methodName}",
@@ -203,4 +202,28 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
                     Label("suite", getClassDisplayName(description)))
                     + getLabels(description)
     )
+
+
+    private fun testWithException(uuid: String, failure: Failure) {
+        with(lifecycle) {
+            updateTestCase(uuid) {
+                status = Status.fromThrowable(failure.exception)
+                statusDetails = StatusDetails.fromThrowable(failure.exception)
+                stop = System.currentTimeMillis()
+            }
+            stopTestCase(uuid)
+            writeTestCase(uuid)
+        }
+    }
+
+    private fun suiteWithException(failure: Failure) {
+        failure.description.children.forEach {
+            val uuid = getUUIDTestResult(it)
+            testWithException(uuid, failure)
+        }
+    }
+
+    private fun getUUIDTestResult(description: Description): String {
+        return "${description.className}#${description.methodName}"
+    }
 }
