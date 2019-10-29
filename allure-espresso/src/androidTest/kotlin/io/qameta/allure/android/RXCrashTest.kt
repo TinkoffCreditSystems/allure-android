@@ -7,6 +7,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -18,6 +19,7 @@ class RXCrashTest {
 
     // adb shell am instrument -w -r   -e debug false -e class io.qameta.allure.android.CrashTest#rxCrash io.qameta.allure.android.test/io.qameta.allure.espresso.AllureAndroidRunner
     @Test
+    @Ignore
     fun rxCrash() {
         activityRule.launchActivity(Intent(InstrumentationRegistry.getTargetContext().applicationContext, CrashTestActivity::class.java))
         onView(withId(R.id.rx_crash_button)).perform(click())

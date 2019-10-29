@@ -55,7 +55,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      */
     @Throws(Exception::class)
     override fun testRunFinished(result: Result) {
-        // do nothing
+        testRunFinished()
     }
 
     fun testRunFinished() {
@@ -118,12 +118,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      */
     @Throws(Exception::class)
     override fun testFailure(failure: Failure) {
-        if (failure.description.isTest) {
-            val uuid = getUUIDTestResult(failure.description)
-            testWithException(uuid, failure)
-        } else {
-            suiteWithException(failure)
-        }
+        testWithException(failure)
     }
 
     /**
@@ -135,7 +130,16 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      */
     @Throws(Exception::class)
     override fun testAssumptionFailure(failure: Failure) {
-        testFailure(failure)
+        testWithException(failure)
+    }
+
+    private fun testWithException(failure: Failure) {
+        if (failure.description.isTest) {
+            val uuid = getUUIDTestResult(failure.description)
+            testWithException(uuid, failure)
+        } else {
+            suiteWithException(failure)
+        }
     }
 
     /**
@@ -159,6 +163,14 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
         }
     }
 
+    private fun getIgnoredMessage(description: Description): StatusDetails {
+        val ignore = description.getAnnotation(Ignore::class.java)
+        val message = if (ignore?.value?.isNotEmpty() == true)
+            ignore.value else "Test ignored (without reason)!"
+
+        return StatusDetails(message = message)
+    }
+
     protected open fun finalizeContainer(container: String?) {
         with(lifecycle) {
             stopTestContainer(container)
@@ -179,14 +191,6 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
         containers.put(description.className, container)
         lifecycle.startTestContainer(testCases.get(), container)
         return container
-    }
-
-    private fun getIgnoredMessage(description: Description): StatusDetails {
-        val ignore = description.getAnnotation(Ignore::class.java)
-        val message = if (ignore?.value?.isNotEmpty() == true)
-            ignore.value else "Test ignored (without reason)!"
-
-        return StatusDetails(message = message)
     }
 
     private fun createTestResult(description: Description): TestResult = TestResult(

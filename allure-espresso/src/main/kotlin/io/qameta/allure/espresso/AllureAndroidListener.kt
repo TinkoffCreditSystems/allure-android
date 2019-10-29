@@ -32,8 +32,8 @@ class AllureAndroidListener : InstrumentationRunListener() {
         allureListenerDelegate.testRunStarted()
     }
 
-    override fun testRunFinished(result: Result?) {
-        allureListenerDelegate.testRunFinished()
+    override fun testRunFinished(result: Result) {
+        allureListenerDelegate.testRunFinished(result)
     }
 
     override fun testIgnored(description: Description) {
