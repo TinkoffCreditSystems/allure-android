@@ -214,8 +214,6 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
                 status = Status.fromThrowable(failure.exception)
                 statusDetails = StatusDetails.fromThrowable(failure.exception)
             }
-            stopTestCase(uuid)
-            writeTestCase(uuid)
         }
     }
 
