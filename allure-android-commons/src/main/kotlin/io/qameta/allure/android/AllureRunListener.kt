@@ -54,7 +54,7 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
      * @param result the summary of the test run, including all the tests that failed
      */
     @Throws(Exception::class)
-    override fun testRunFinished(result: Result) {
+    override fun testRunFinished(result: Result?) {
         testRunFinished()
     }
 
