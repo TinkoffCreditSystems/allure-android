@@ -14,6 +14,7 @@ import io.qameta.allure.espresso.FailshotRule
 import io.qameta.allure.espresso.LogcatClearRule
 import io.qameta.allure.espresso.LogcatDumpRule
 import io.qameta.allure.espresso.WindowHierarchyRule
+import io.qameta.allure.espresso.deviceScreenshot
 import org.junit.Assume
 import org.junit.Ignore
 import kotlin.test.assertTrue
@@ -67,5 +68,10 @@ class AllureTest {
     @Test
     fun shouldAssumed() {
         Assume.assumeTrue(false)
+    }
+
+    @Test
+    fun shouldAddScreenshot() {
+        deviceScreenshot("my screenshot")
     }
 }
