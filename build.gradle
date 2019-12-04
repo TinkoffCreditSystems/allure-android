@@ -8,30 +8,28 @@ buildscript {
     dependencies {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.51'
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41'
+        classpath 'com.android.tools.build:gradle:3.5.2'
     }
 }
 ext {
     gradleScriptDir = "${rootProject.projectDir}/gradle"
 
-    compileSdkVersion = 28
+    compileSdkVersion = 29
     minSdkVersion = 15
-    buildToolsVersion = '28.0.2'
+    buildToolsVersion = '28.0.3'
 
     gsonVersion = '2.8.0'
 
     hamcrestVersion = '1.3'
-    androidXVersion = '1.0.0'
+    androidXVersion = '1.0.2'
     androidXTestVersion = '1.2.0'
     multidexVersion = '2.0.1'
     jUnitVersion = '4.12'
     uiAutomatorVersion = '2.2.0'
-    espressoVersion = '3.1.0'
+    espressoVersion = '3.2.0'
 
-    androidPlugin = '3.2.0'
-    versionsPlugin = '0.11.3'
-    kotlinVersion = '1.2.51'
+    kotlinVersion = '1.3.41'
     dexCountVersion = '0.8.1'
 }
 
