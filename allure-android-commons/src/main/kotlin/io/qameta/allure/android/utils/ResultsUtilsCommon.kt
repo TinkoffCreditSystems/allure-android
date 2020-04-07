@@ -92,12 +92,14 @@ fun createTmsLink(value: String): Link {
 }
 
 fun createLink(value: String?, name: String?, url: String?, type: String): Link {
-    return Link(name = value ?: name, url = url ?: getLinkUrl(name, type), type = type)
+    val linkName = value ?: name
+    val linkUrl = url ?: getLinkUrl(linkName, type)
+    return Link(linkName, linkUrl, type)
 }
 
 fun getLinkUrl(name: String?, type: String): String? {
     val pattern = System.getProperty("allure.link.$type.pattern") ?: return null
-    return pattern.replace("\\{}", name ?: "")
+    return pattern.replace("{}", name ?: "")
 }
 
 fun createLabels(epics: Epics): List<Label> {
