@@ -1,6 +1,9 @@
 package io.qameta.allure.android.utils
 
-import org.junit.runner.Description
+import io.qameta.allure.android.annotations.Issues
+import io.qameta.allure.android.annotations.Layer
+import io.qameta.allure.android.annotations.Tag
+import io.qameta.allure.android.annotations.Tags
 import io.qameta.allure.android.SeverityLevel
 import io.qameta.allure.android.annotations.DisplayName
 import io.qameta.allure.android.annotations.Epic
@@ -15,6 +18,7 @@ import io.qameta.allure.android.annotations.Story
 import io.qameta.allure.android.annotations.TmsLink
 import io.qameta.allure.android.model.Label
 import io.qameta.allure.android.model.Link
+import org.junit.runner.Description
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.util.Collections.emptyList
@@ -32,6 +36,8 @@ const val OWNER_LABEL_NAME = "owner"
 const val EPIC_LABEL_NAME = "epic"
 const val FEATURE_LABEL_NAME = "feature"
 const val STORY_LABEL_NAME = "story"
+const val LAYER_LABEL_NAME = "layer"
+const val ISSUE_LABEL_TYPE = "issue"
 
 
 fun getMethodDisplayName(description: Description): String {
@@ -41,10 +47,6 @@ fun getMethodDisplayName(description: Description): String {
 fun getClassDisplayName(description: Description): String? {
     return description.testClass.getAnnotation(DisplayName::class.java)?.value
             ?: description.className
-}
-
-fun createTagLabel(tag: String): Label {
-    return createLabel(TAG_LABEL_NAME, tag)
 }
 
 fun createOwnerLabel(owner: String): Label {
@@ -75,8 +77,8 @@ fun createLink(link: io.qameta.allure.android.annotations.Link): Link {
     return createLink(link.value, link.name, link.url, link.type)
 }
 
-fun createLink(link: Issue): Link {
-    return createIssueLink(link.value)
+fun createLink(issue: Issue): Link {
+    return createIssueLink(issue.value)
 }
 
 fun createIssueLink(value: String): Link {
@@ -126,12 +128,32 @@ fun createFeatureLabel(value: String): Label {
     return createLabel(name = FEATURE_LABEL_NAME, value = value)
 }
 
-fun createLabels(features: Stories): List<Label> {
-    return features.value.map { createLabel(it) }
+fun createLabels(stories: Stories): List<Label> {
+    return stories.value.map { createLabel(it) }
 }
 
-fun createLabel(feature: Story): Label {
-    return createStoryLabel(feature.value)
+fun createLabel(story: Story): Label {
+    return createStoryLabel(story.value)
+}
+
+fun createLabel(layer: Layer): Label {
+    return createLabel(name = LAYER_LABEL_NAME, value = layer.value)
+}
+
+fun createLabels(tags: Tags): List<Label> {
+    return tags.value.map { createLabel(it) }
+}
+
+fun createLabel(tag: Tag): Label {
+    return createLabel(name = TAG_LABEL_NAME, value = tag.value)
+}
+
+fun createLabels(tags: Issues): List<Label> {
+    return tags.value.map { createLabel(it) }
+}
+
+fun createLabel(issue: Issue): Label {
+    return createLabel(name = ISSUE_LABEL_TYPE, value = issue.value)
 }
 
 fun createStoryLabel(value: String): Label {
@@ -153,6 +175,15 @@ fun getLabels(description: Description): List<Label> {
             getAnnotationsOnClass(description, Severity::class.java).map { createLabel(it) } +
             getAnnotationsOnMethod(description, Severity::class.java).map { createLabel(it) } +
 
+            getAnnotationsOnClass(description, Layer::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Layer::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnClass(description, Issues::class.java).flatMap { createLabels(it) } +
+            getAnnotationsOnMethod(description, Issues::class.java).flatMap { createLabels(it) } +
+
+            getAnnotationsOnClass(description, Issue::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Issue::class.java).map { createLabel(it) } +
+
             getAnnotationsOnClass(description, Epics::class.java).flatMap { createLabels(it) } +
             getAnnotationsOnMethod(description, Epics::class.java).flatMap { createLabels(it) } +
 
@@ -169,14 +200,20 @@ fun getLabels(description: Description): List<Label> {
             getAnnotationsOnMethod(description, Stories::class.java).flatMap { createLabels(it) } +
 
             getAnnotationsOnClass(description, Story::class.java).map { createLabel(it) } +
-            getAnnotationsOnMethod(description, Story::class.java).map { createLabel(it) }
+            getAnnotationsOnMethod(description, Story::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnClass(description, Tags::class.java).flatMap { createLabels(it) } +
+            getAnnotationsOnMethod(description, Tags::class.java).flatMap { createLabels(it) } +
+
+            getAnnotationsOnClass(description, Tag::class.java).map { createLabel(it) } +
+            getAnnotationsOnMethod(description, Tag::class.java).map { createLabel(it) }
 }
 
-fun <T : Annotation> getAnnotationsOnMethod(description: org.junit.runner.Description, clazz: Class<T>): List<T> {
+fun <T : Annotation> getAnnotationsOnMethod(description: Description, clazz: Class<T>): List<T> {
     return listOfNotNull(description.getAnnotation(clazz)) + extractRepeatable(clazz)
 }
 
-fun <T : Annotation> getAnnotationsOnClass(description: org.junit.runner.Description, clazz: Class<T>): List<T> {
+fun <T : Annotation> getAnnotationsOnClass(description: Description, clazz: Class<T>): List<T> {
     return listOfNotNull(description.testClass.getAnnotation(clazz))
 }
 
