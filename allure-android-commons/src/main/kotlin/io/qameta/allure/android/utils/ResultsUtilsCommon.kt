@@ -1,21 +1,7 @@
 package io.qameta.allure.android.utils
 
-import io.qameta.allure.android.annotations.Issues
-import io.qameta.allure.android.annotations.Layer
-import io.qameta.allure.android.annotations.Tag
-import io.qameta.allure.android.annotations.Tags
 import io.qameta.allure.android.SeverityLevel
-import io.qameta.allure.android.annotations.DisplayName
-import io.qameta.allure.android.annotations.Epic
-import io.qameta.allure.android.annotations.Epics
-import io.qameta.allure.android.annotations.Feature
-import io.qameta.allure.android.annotations.Features
-import io.qameta.allure.android.annotations.Issue
-import io.qameta.allure.android.annotations.Owner
-import io.qameta.allure.android.annotations.Severity
-import io.qameta.allure.android.annotations.Stories
-import io.qameta.allure.android.annotations.Story
-import io.qameta.allure.android.annotations.TmsLink
+import io.qameta.allure.android.annotations.*
 import io.qameta.allure.android.model.Label
 import io.qameta.allure.android.model.Link
 import org.junit.runner.Description
@@ -38,6 +24,7 @@ const val FEATURE_LABEL_NAME = "feature"
 const val STORY_LABEL_NAME = "story"
 const val LAYER_LABEL_NAME = "layer"
 const val ISSUE_LABEL_TYPE = "issue"
+const val ALLURE_ID_LABEL_NAME = "AS_ID"
 
 
 fun getMethodDisplayName(description: Description): String {
@@ -156,6 +143,14 @@ fun createLabel(issue: Issue): Label {
     return createLabel(name = ISSUE_LABEL_TYPE, value = issue.value)
 }
 
+fun createLabel(allureId: AllureId): Label {
+    return createAllureIdLabel(allureId.value)
+}
+
+fun createAllureIdLabel(value: String): Label {
+    return createLabel(name = ALLURE_ID_LABEL_NAME, value = value)
+}
+
 fun createStoryLabel(value: String): Label {
     return createLabel(name = STORY_LABEL_NAME, value = value)
 }
@@ -206,7 +201,9 @@ fun getLabels(description: Description): List<Label> {
             getAnnotationsOnMethod(description, Tags::class.java).flatMap { createLabels(it) } +
 
             getAnnotationsOnClass(description, Tag::class.java).map { createLabel(it) } +
-            getAnnotationsOnMethod(description, Tag::class.java).map { createLabel(it) }
+            getAnnotationsOnMethod(description, Tag::class.java).map { createLabel(it) } +
+
+            getAnnotationsOnMethod(description, AllureId::class.java).map { createLabel(it) }
 }
 
 fun <T : Annotation> getAnnotationsOnMethod(description: Description, clazz: Class<T>): List<T> {
