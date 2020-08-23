@@ -2,7 +2,7 @@
 
 ## Why allure-kotlin?
 
-Why not `allure-android`? The official Allure Android adapter implementation is limited and it doesn't support all of the features of Allure. Its drawbacks are following:
+Why not `allure-android`? The Allure Android adapter implementation is limited and it doesn't support all of the features of Allure. Its drawbacks are following:
 * no support for all annotations e.g. `@Description`, `@LinkAnnotations`
 * limited API when comparing to `allure-java`
 * poor test coverage
@@ -66,6 +66,7 @@ If you are using those classes, beware that some of them may have different null
     1. Change all imports from `io.qameta.allure.android.io.*` -> `io.qameta.allure.kotlin.*`
     1. In case you have custom `AllureResultsWriter` adjust it as the API has changed a bit
     1. `AllureResultsReader` & `FileSystemResultsReader` have been removed as they are not used anymore
+    1. In case you are using any of the constants like from `AllureFileConstants` (like `TEXT_PLAIN`, `TXT_EXTENSION`) define them yourself as they are not part of public API anymore.
 1. Migrate package `listener` - change all imports from `io.qameta.allure.android.listener.*` -> `io.qameta.allure.kotlin.listener.*`
 1. Migrate package `serialization` - it was used internally and is no longer needed.
 1. Migrate package `utils` - it was used to parse the annotations to allure results. It shouldn't be accesed by consumer code. If you were using any of those methods take a look at ` io.qameta.allure.kotlin.util.ResultsUtils` for replacement (as the implementation of parsing annotations has changed).
@@ -90,5 +91,7 @@ If you are using those classes, beware that some of them may have different null
     1. Replace `LogcatClearRule` & `LogcatDumpRule` with `io.qameta.allure.android.rules.LogcatRule` that merges behaviour of those 2 rules.
     1. Change import for `WindowHierarchyRule` to `io.qameta.allure.android.rules.WindowHierarchyRule`
 1. Change import for `AllureAndroidLifecycle` from `io.qameta.allure.espresso.io.qameta.allure.espresso` -> `io.qameta.allure.android.AllureAndroidLifecycle`
+    1. Migrate `addAttachment` / `prepareAttachment` methods as the signature changed (renamed & reordered parameters, fixed nullability). Most importantly the `file` parameter type was changed from `File` to either `ByteArray` or `InputStream`. The easiest way to migrate it is to convert the `file` to `InputStream` (e.g. `FileInputStream(file)`).
+    1. Where possible migrate `addAttachment` to `Allure.attachment` as this is the API that should be used for updating allure results.
 1. Change import for `LogCatListener` from `io.qameta.allure.espresso.listener.LogCatListener` -> `io.qameta.allure.android.listeners.LogcatListener`
 1. Migrate screenshots taking from `deviceScreenshot` to `io.qameta.allure.android.allureScreenshot` that allows to specify quality and scale of a screenshot.
