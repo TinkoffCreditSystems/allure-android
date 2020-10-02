@@ -156,6 +156,28 @@ class MyTest {
     // ...
 }
 ```
+`FailshotRule` can be customized to limit size and/or quality of screenshots.
+
+Scale screenshot down to half of original size, 90% quality:
+```kotlin
+class MyTest {
+
+    @get:Rule
+    val failshot = (scale = 0.5f, quality = 70)
+
+    // ...
+}
+```
+Set maximum screenshot width to 600 px:
+```kotlin
+class MyTest {
+
+    @get:Rule
+    val failshot = (maxWidth = 600) // will scale screenshot down to half of original size
+
+    // ...
+}
+```
 
 ### Logcat rule's (only in new version)
 You can use `LogcatDumpRule`, `LogcatClearRule` to clear and capture a device logs in case of `Throwable` during test
