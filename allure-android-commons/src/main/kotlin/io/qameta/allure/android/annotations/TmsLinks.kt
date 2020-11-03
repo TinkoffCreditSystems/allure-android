@@ -3,7 +3,7 @@ package io.qameta.allure.android.annotations
 import java.lang.annotation.Inherited
 
 /**
- * Wrapper annotation for {@link Epic}.
+ * Wrapper annotation for [TmsLink].
  */
 @Inherited
 @MustBeDocumented
@@ -12,7 +12,7 @@ import java.lang.annotation.Inherited
         AnnotationTarget.FUNCTION,
         AnnotationTarget.PROPERTY_GETTER,
         AnnotationTarget.PROPERTY_SETTER,
-        AnnotationTarget.CLASS,
-        AnnotationTarget.FILE
+        AnnotationTarget.ANNOTATION_CLASS,
+        AnnotationTarget.CLASS
 )
-annotation class Epics(vararg val value: Epic)
+annotation class TmsLinks(vararg val value: TmsLink)

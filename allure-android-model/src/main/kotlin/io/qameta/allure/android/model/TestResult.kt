@@ -2,6 +2,7 @@ package io.qameta.allure.android.model
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import kotlin.collections.HashSet
 
 /**
  * @author Badya on 14.04.2017.
@@ -13,6 +14,6 @@ class TestResult(
         @SerializedName("testCaseId") var testCaseId: String? = null,
         @SerializedName("rerunOf") var rerunOf: String? = null,
         @SerializedName("fullName") var fullName: String? = null,
-        @SerializedName("labels") var labels: List<Label> = ArrayList(),
-        @SerializedName("links") var links: List<Link> = ArrayList()
+        @SerializedName("labels") var labels: Set<Label> = HashSet(),
+        @SerializedName("links") var links: Set<Link> = HashSet()
 ) : ExecutableItem(name = name)

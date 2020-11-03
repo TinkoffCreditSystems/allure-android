@@ -19,8 +19,8 @@ class GsonSerializationProcessorTest {
                     name = "Test",
                     historyId = "testHistoryId",
                     fullName = "${this.javaClass.name}.serializeTestResult",
-                    links = listOf(Link(name = "myLink")),
-                    labels = listOf(Label(name = "label", value = "value"))
+                    links = setOf(Link(name = "myLink")),
+                    labels = setOf(Label(name = "label", value = "value"))
             )
 
     @get:Rule

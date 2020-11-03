@@ -1,6 +1,5 @@
 package io.qameta.allure.android.annotations
 
-
 import java.lang.annotation.Inherited
 
 /**
@@ -9,5 +8,11 @@ import java.lang.annotation.Inherited
 @Inherited
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER, AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Target(
+        AnnotationTarget.FUNCTION,
+        AnnotationTarget.PROPERTY_GETTER,
+        AnnotationTarget.PROPERTY_SETTER,
+        AnnotationTarget.CLASS,
+        AnnotationTarget.FILE
+)
 annotation class Issues(vararg val value: Issue)

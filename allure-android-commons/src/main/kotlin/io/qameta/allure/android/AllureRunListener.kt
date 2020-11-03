@@ -5,12 +5,7 @@ import io.qameta.allure.android.model.Status
 import io.qameta.allure.android.model.StatusDetails
 import io.qameta.allure.android.model.TestResult
 import io.qameta.allure.android.model.TestResultContainer
-import io.qameta.allure.android.utils.getClassDisplayName
-import io.qameta.allure.android.utils.getHistoryId
-import io.qameta.allure.android.utils.getLabels
-import io.qameta.allure.android.utils.getLinks
-import io.qameta.allure.android.utils.getMethodDisplayName
-import io.qameta.allure.android.utils.getPackage
+import io.qameta.allure.android.utils.*
 import org.junit.Ignore
 import org.junit.runner.Description
 import org.junit.runner.Result
@@ -198,13 +193,15 @@ open class AllureRunListener(private val lifecycle: AllureLifecycle = AllureComm
             historyId = getHistoryId(description),
             name = getMethodDisplayName(description),
             fullName = "${description.className}.${description.methodName}",
-            links = getLinks(description),
-            labels = listOf(
+            links = AnnotationUtils.getLinks(description.annotations)
+                    + AnnotationUtils.getLinks(description.testClass),
+            labels = setOf(
                     Label("package", getPackage(description.testClass)),
                     Label("testClass", description.className),
                     Label("testMethod", description.methodName),
                     Label("suite", getClassDisplayName(description)))
-                    + getLabels(description)
+                    + AnnotationUtils.getLabels(description.annotations)
+                    + AnnotationUtils.getLabels(description.testClass)
     )
 
 

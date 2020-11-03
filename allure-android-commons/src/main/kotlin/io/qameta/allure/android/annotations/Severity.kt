@@ -1,6 +1,7 @@
 package io.qameta.allure.android.annotations
 
 import io.qameta.allure.android.SeverityLevel
+import io.qameta.allure.android.utils.SEVERITY_LABEL_NAME
 import java.lang.annotation.Inherited
 
 /**
@@ -9,5 +10,12 @@ import java.lang.annotation.Inherited
 @Inherited
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER, AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Target(
+        AnnotationTarget.FUNCTION,
+        AnnotationTarget.PROPERTY_GETTER,
+        AnnotationTarget.PROPERTY_SETTER,
+        AnnotationTarget.CLASS,
+        AnnotationTarget.FILE
+)
+@LabelAnnotation(name = SEVERITY_LABEL_NAME)
 annotation class Severity(val value: SeverityLevel)

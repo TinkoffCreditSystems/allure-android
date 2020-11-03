@@ -1,5 +1,7 @@
 package io.qameta.allure.android.annotations
 
+import io.qameta.allure.android.utils.SEVERITY_LABEL_NAME
+import io.qameta.allure.android.utils.STORY_LABEL_NAME
 import java.lang.annotation.Inherited
 
 /**
@@ -8,6 +10,13 @@ import java.lang.annotation.Inherited
 @Inherited
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.PROPERTY_GETTER, AnnotationTarget.PROPERTY_SETTER, AnnotationTarget.CLASS, AnnotationTarget.FILE)
+@Target(
+        AnnotationTarget.FUNCTION,
+        AnnotationTarget.PROPERTY_GETTER,
+        AnnotationTarget.PROPERTY_SETTER,
+        AnnotationTarget.CLASS,
+        AnnotationTarget.FILE
+)
 @Repeatable
+@LabelAnnotation(name = STORY_LABEL_NAME)
 annotation class Story(val value: String)
